@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width" />
+    <title>Making an appointment</title>
+    <link href="styles.css" rel="stylesheet">
+    <style>
+        *{
+            box-sizing: border-box;
+        }
+        html, body {
+            padding: 0;
+            margin: 0;
+            font-family: verdana, arial, sans-serif;
+        }
+
+        body {
+            color: #fff;
+            font-size: 1.1em;
+            padding: 1em;
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+        }
+
+        article {
+            background-color: #546e7a;
+            flex: 2 2 12em;
+            padding: 1em;
+        }
+
+        nav, aside {
+            flex: 1;
+            background-color: #455a64;
+        }
+
+        nav {
+            order: -1;
+        }
+
+        header, footer {
+            flex: 0 0 5em;
+            background-color: #37474f;
+        }
+
+        @media screen and (min-width: 600px) {
+
+            body{
+                min-height: 100vh;
+            }
+            main {
+                flex-direction: row;
+                min-height: 100%;
+                flex: 1 1 auto;
+            }
+        }
+
+        a:link, a:visited {
+            background-color: white;
+            color: black;
+            border: 2px solid green;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        a:hover, a:active {
+            background-color: green;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <p>Making an appointment</p>
+</header>
+<main>
+    <article>
+        <h1>Print your own booklet</h1>
+        <p>When you make your appointment, it’s important that you have your insurance card or other documentation available, in case you’re asked to provide insurance information.</p>
+    </article>
+    <nav>
+        <p>
+        <div id="sidebar1" class="aside" th:each="patient : ${patients}">
+            <a th:href="@{/patients/{id}(id=${patient.getId()})}"
+               th:text="${patient.getName() + ' ' + patient.getSurname() +  ', ' + patient.getYearOfBirth()}">user</a>
+        </div>
+        </p>
+    </nav>
+    <aside>
+        <p>
+        <ul>
+            <li><a href="/patients/new">Добавить пациента</a></li>
+            <li><a href="#">Запись на приём</a></li>
+            <li><a href="#">Отмена записи</a></li>
+        </ul>
+        </p>
+    </aside>
+</main>
+<footer>
+    <p>
+    <div id="footer">
+        <p>Contacts: thecodegod1@gmail.com</p>
+        <p>Copyright © Vladimir Sobornov, 2022</p>
+    </div>
+    </p>
+</footer>
+</body>
+</html>
