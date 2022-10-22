@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Show</title>
+</head>
+<body>
+<p th:text="${doctor.getName() + ' ' + doctor.getSurname()}">VALUE</p>
+
+<div th:if="${patients.isEmpty()}">
+    <p>No patients</p>
+    <hr/>
+</div>
+
+<div th:if="${!patients.isEmpty()}">
+    <hr/>
+    <b>Patients:</b>
+    <br/>
+    <table th:each="patient : ${patients}">
+        <tr>
+            <td>
+                <span th:text="${patient.getName() + ', ' + patient.getSurname() + ', ' + patient.getMhi()}">
+                    patient
+                </span>
+            </td>
+        </tr>
+    </table>
+    <hr/>
+</div>
+
+<form th:method="GET" th:action="@{/doctors/{id}/edit(id=${doctor.getId()})}">
+    <input type="submit" value="Редактировать"/>
+</form>
+
+<form th:method="DELETE" th:action="@{/doctors/{id}(id=${doctor.getId()})}">
+    <input type="submit" value="Удалить"/>
+</form>
+
+</body>
+</html>

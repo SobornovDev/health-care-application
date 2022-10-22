@@ -44,6 +44,10 @@ public class Patient {
     @Column(name = "phone_number")
     private String phoneNumber;
 
+    @ManyToOne
+    @JoinColumn(name = "doctor_id", referencedColumnName = "id")
+    private Doctor doctor;
+
     public String getMhi() {
         return mhi;
     }

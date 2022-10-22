@@ -1,5 +1,6 @@
 package ru.sobornov.demospringbootkotlin.services
 
+import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import ru.sobornov.demospringbootkotlin.models.Patient
@@ -13,10 +14,13 @@ import java.util.*
 
 @Service
 @Transactional(readOnly = true)
-class PatientService (private val patientRepository: PatientRepository) {
+class PatientService (private val patientRepository: PatientRepository, private val kafkaTemplate: KafkaTemplate<String, Patient>) {
 
     @Transactional
-    fun save(patient: Patient) = patientRepository.save(patient)
+    fun save(patient: Patient)  {
+        patientRepository.save(patient)
+        kafkaTemplate.send("patients", patient)
+    }
 
     fun findAll(): MutableIterable<Patient> = patientRepository.findAll();
 
